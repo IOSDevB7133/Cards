@@ -1,0 +1,113 @@
+import UIKit
+var Deck = [
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+
+]
+var Redeck = [
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+    [1,2,3,4,5,6,7,8,9,10,11,12,13],
+]
+var cardNumber = 52
+
+func getRand() -> Int{
+    let randomNumber:Int = Int(arc4random() % 51)
+    return randomNumber
+}
+
+struct Card {
+    var r:Int
+    var s:Int
+    func cardOut() -> String {
+        var o = "?"
+        switch r {
+        case 0:
+            o = "A"
+        case 10:
+            o = "J"
+        case 11:
+            o = "Q"
+        case 12:
+            o = "K"
+        default:
+            o = "\(r + 1)"
+        }
+        switch s {
+        case 0:
+            return "♠️\(o)"
+        case 1:
+            return "♥️\(o)"
+        case 2:
+            return "♦️\(o)"
+        case 3:
+            return "♣️\(o)"
+        default:
+            return "?"
+        }
+    }
+}
+
+func getCard() -> Card{
+    var d:Int = getRand()
+    var s:Int = d / 13
+    var r:Int = d % 13
+    while (Deck[s][r] == 0 && cardNumber != 1) {
+        d = getRand()
+        s = d / 13
+        r = d % 13
+    }
+    if (cardNumber == 1) {
+        for i in 0..<4 {
+        for j in 0..<13 {
+        if(Deck[i][j] != 0){
+            s = i
+            r = j
+        }
+        }
+        }
+    }
+    Deck[s][r] = 0
+    cardNumber -= 1
+    let card = Card(r: r, s: s)
+    return card
+}
+
+func reCard() {
+    Deck = Redeck
+}
+
+var p1s:[Card] = [Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4)]
+var p2s:[Card] = [Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4)]
+var p3s:[Card] = [Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4)]
+var p4s:[Card] = [Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4),Card(r: 13, s: 4)]
+
+for i in 0..<13 {
+    let card = getCard()
+    p1s[i] = card
+}
+for i in 0..<13 {
+    let card = getCard()
+    p2s[i] = card
+}
+for i in 0..<13 {
+    let card = getCard()
+    p3s[i] = card
+}
+for i in 0..<13 {
+    let card = getCard()
+    p4s[i] = card
+}
+
+func outCards(ps: [Card]) {
+    print("某玩家的十三张牌是：")
+print(ps[0].cardOut(),ps[1].cardOut(),ps[2].cardOut(),ps[3].cardOut(),ps[4].cardOut(),ps[5].cardOut(),ps[6].cardOut(),ps[7].cardOut(),ps[8].cardOut(),ps[9].cardOut(),ps[10].cardOut(),ps[11].cardOut(),ps[12].cardOut())
+}
+
+outCards(ps: p1s)
+outCards(ps: p2s)
+outCards(ps: p3s)
+outCards(ps: p4s)
